@@ -1,5 +1,5 @@
 (function(Tone) {
-channels = [
+window.channels = [
   {
     'label': 'kick',
     'vol': 5,
@@ -42,7 +42,7 @@ channels = [
               0, 0, 0, 0,
               0, 0, 1, 0,
               0, 0, 1, 0,
-              
+
               0, 0, 0, 0,
               0, 0, 0, 0,
               1, 0, 1, 0,
@@ -72,7 +72,7 @@ channels = [
             null, null, null, null,
             null, null, null, null,
             null, null, null, null,
-            
+
             '32n', null, '32n', null,
             '32n', null, '32n', null,
             '8n', null, null, null,
@@ -84,7 +84,7 @@ channels = [
                1, 1, 1, 1,
                0, 0, 0, 0,
                0, 0, 0, 0,
-               
+
                0, 0, 0, 0,
                1, 1, 1, 1,
                0, 0, 0, 0,
@@ -103,12 +103,12 @@ channels = [
       }
     })},
     'timing': '16n',
-    'interval': '8n', 
+    'interval': '8n',
     'mel': ['G3', 'C4', 'C4', 'C4',
             null, null, null, null,
             'G3', 'C4', 'C4', 'C4',
             null, null, null, null,
-            
+
             'G3', 'C4', 'G3', 'C4',
             null, null, null, null,
             'G3', 'C4', 'C4', 'C4',
@@ -138,8 +138,8 @@ channels = [
       new Tone.Distortion(2.5),
       new Tone.Freeverb(),
       new Tone.Phaser({
-        "frequency" : 15, 
-        "octaves" : 15, 
+        "frequency" : 15,
+        "octaves" : 15,
         "baseFrequency" : 3000
       })
     ]
@@ -159,8 +159,8 @@ channels = [
     'effects': [
       new Tone.Freeverb(),
       new Tone.Phaser({
-        "frequency" : 15, 
-        "octaves" : 15, 
+        "frequency" : 15,
+        "octaves" : 15,
         "baseFrequency" : 3000
       })
     ]
@@ -195,13 +195,13 @@ channels = [
     'interval': '8n',
     'mel': ['C1', null, 'E4', null,
             'F2', null, 'F3', null,
-            'A1', null, 'G3', null, 
+            'A1', null, 'G3', null,
             'D2', null, 'C3', null ],
     'sched': [ 1, 1, 1, 1,
                0, 0, 1, 1,
                1, 1, 1, 1,
                1, 1, 1, 1,
-               
+
                1, 1, 1, 1,
                0, 0, 0, 0,
                1, 1, 1, 1,
@@ -213,7 +213,7 @@ channels = [
     'init': function() {return new Tone.DuoSynth()},
     'timing': '8n',
     'interval': '8n',
-    'mel': ['C1', 'E4', 'F2', 'F3', 
+    'mel': ['C1', 'E4', 'F2', 'F3',
             'A1', 'G3', 'D2', 'C3',
             null, null, null, null,
             null, null, null, null],
@@ -221,7 +221,7 @@ channels = [
                1, 1, 1, 1,
                1, 1, 1, 1,
                1, 1, 1, 1,
-               
+
                1, 1, 1, 1,
                0, 0, 0, 0,
                1, 1, 1, 1,
@@ -266,7 +266,7 @@ channels = [
                0, 0, 0, 0,
                0, 0, 0, 0,
                0, 0, 0, 0,
-               
+
                1, 1, 1, 1,
                1, 1, 1, 1,
                1, 1, 1, 1,
@@ -310,8 +310,8 @@ var triggerInstrument = function(instr) {
       instr.output.classList.toggle('active');
     }, time);
     instr.ind++;
-  }
-}
+  };
+};
 
 var bpmCtrl = document.createElement('div');
 bpmCtrl.classList.add('control');
@@ -322,7 +322,7 @@ bpmCtrl.innerHTML = bpmContent;
 
 var volCtrl = document.createElement('div');
 volCtrl.classList.add('control');
-var volContent = '<span>vol</span> '
+var volContent = '<span>vol</span> ';
 volContent += '<input type="range" value="' + masterVol + '" min="-50" max="50" id="vol"/> ';
 volContent += '<span id="voloutput">' + masterVol + '</span>';
 volCtrl.innerHTML = volContent;
@@ -331,17 +331,17 @@ var content = document.querySelector('#content');
 content.appendChild(bpmCtrl);
 content.appendChild(volCtrl);
 
-//analyse the frequency/amplitude of the incoming signal  
+//analyse the frequency/amplitude of the incoming signal
 var fft = new Tone.Analyser({type: "fft", size: 512, maxDecibels: -10, minDecibels: -150});
 //get the waveform data for the audio
 var waveform = new Tone.Analyser({type: "waveform", size: 1024, maxDecibels: 0, minDecibels: -31});
 
 document.querySelector('#bpm').addEventListener('input', function(e){
-  Tone.Transport.bpm.value = parseInt(e.target.value);
+  Tone.Transport.bpm.value = parseInt(e.target.value, 10);
   document.querySelector('#bpmoutput').innerHTML = e.target.value;
 });
 document.querySelector('#vol').addEventListener('input', function(e){
-  masterVolume.volume.value = parseInt(e.target.value);
+  masterVolume.volume.value = parseInt(e.target.value, 10);
   document.querySelector('#voloutput').innerHTML = e.target.value;
 });
 
@@ -389,7 +389,7 @@ function addControls(channel) {
   el.setAttribute('class', 'channel');
   wrapper.appendChild(el);
   channel.element = el;
-};
+}
 
 //Tone.Transport.loopEnd = '4n'
 Tone.Transport.loop = true;
@@ -402,7 +402,7 @@ document.querySelector('.playToggle').addEventListener('change', function(e){
   } else {
     Tone.Transport.stop();
   }
-})
+});
 var canvases = document.querySelector('#canvases');
 //drawing the FFT
 var fftEl = document.createElement('canvas');
